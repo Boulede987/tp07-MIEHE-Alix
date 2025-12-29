@@ -1,6 +1,15 @@
-import { ApplicationConfig, importProvidersFrom, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { 
+  ApplicationConfig, 
+  importProvidersFrom, 
+  provideBrowserGlobalErrorListeners, 
+  provideZonelessChangeDetection 
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { provideHttpClient } from '@angular/common/http';
+import { 
+  provideHttpClient,
+  withInterceptorsFromDi,
+  HTTP_INTERCEPTORS, 
+} from '@angular/common/http';
 
 import { NgxsModule } from '@ngxs/store';
 import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
@@ -8,19 +17,20 @@ import { NgxsStoragePluginModule } from '@ngxs/storage-plugin';
 import { routes } from './app.routes';
 
 import { FavoritePollutionsState } from './pollution_managment/pollution-store/states/favorite-pollutions.state';
-
+import {ApiHttpInterceptor} from './http_interceptor/http_interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     importProvidersFrom(
     NgxsModule.forRoot([FavoritePollutionsState]),
     NgxsStoragePluginModule.forRoot({
-      keys: ['favoritePollutions']  // Persist ONLY favoritePollutions state
+      keys: ['favoritePollutions']
     })
   ),
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptorsFromDi()),
+    { provide: HTTP_INTERCEPTORS, useClass: ApiHttpInterceptor, multi: true },
   ]
 };
