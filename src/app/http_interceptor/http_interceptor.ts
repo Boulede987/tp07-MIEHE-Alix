@@ -33,7 +33,7 @@ export class ApiHttpInterceptor implements HttpInterceptor {
           let tab: Array<String>;
           let enteteAuthorization = evt.headers.get('Authorization');
           if (enteteAuthorization != null) 
-        {
+          {
             tab = enteteAuthorization.split(/Bearer\s+(.*)$/i);
             if (tab.length > 1) 
             {
