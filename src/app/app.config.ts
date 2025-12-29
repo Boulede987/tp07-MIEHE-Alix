@@ -18,11 +18,12 @@ import { routes } from './app.routes';
 
 import { FavoritePollutionsState } from './pollution_managment/pollution-store/states/favorite-pollutions.state';
 import {ApiHttpInterceptor} from './http_interceptor/http_interceptor';
+import { AuthState } from './auth_managment/authentification-store/states/auth.state';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     importProvidersFrom(
-    NgxsModule.forRoot([FavoritePollutionsState]),
+    NgxsModule.forRoot([FavoritePollutionsState, AuthState]),
     NgxsStoragePluginModule.forRoot({
       keys: ['favoritePollutions']
     })

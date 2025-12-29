@@ -3,7 +3,7 @@ import { AsyncPipe } from '@angular/common';
 import { Router } from '@angular/router';
 import { FormControl, ReactiveFormsModule } from '@angular/forms'; 
 import { Observable, combineLatest, map, startWith, Subject, switchMap } from 'rxjs';
-import { Store, Select } from '@ngxs/store';
+import { Store } from '@ngxs/store';
 
 import { PollutionRecap } from '../pollution-recap/pollution-recap';
 import { PollutionAPI } from '../../services/pollution-api';
@@ -11,6 +11,7 @@ import { SubmittedPollution } from '../../classes/submittedPollution/submitted-p
 
 import { FavoritePollutionsState } from '../../pollution-store/states/favorite-pollutions.state';
 import { AddFavoritePollution, RemoveFavoritePollution } from '../../pollution-store/actions/favorite-pollution.action';
+import { AuthState } from '../../../auth_managment/authentification-store/states/auth.state';
 
 @Component({
   selector: 'app-list-pollutions',
@@ -39,6 +40,7 @@ export class ListPollutions implements OnInit {
   // FAVORITES
   favorites = this.store.selectSignal(FavoritePollutionsState.items);
   isFavorite = this.store.selectSignal(FavoritePollutionsState.isFavorite);
+  isConnected$: Observable<boolean> = this.store.select(AuthState.isConnected);
 
   constructor
   (

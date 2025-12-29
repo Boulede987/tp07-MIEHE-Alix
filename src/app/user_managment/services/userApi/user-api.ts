@@ -45,4 +45,8 @@ export class UserApi
   // {
   //   return this.http.delete<User>(`${environment.listUsers}/${user.id}`);
   // }
+
+  public userLogin(email: string, password: string): Observable<User> {
+    return this.http.post<User>(environment.loginUser, { email, password });
+  }
 }

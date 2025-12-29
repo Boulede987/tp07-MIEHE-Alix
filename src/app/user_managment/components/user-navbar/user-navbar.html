@@ -1,2 +1,13 @@
-<button routerLink="/user/create">Créer un utilisateur</button>
-<button routerLink="/user/list">Lister des utilisateurs</button>
+
+@if (!(isConnected$ | async)) {
+    <button routerLink="/user/login">Se connecter</button>
+    <button routerLink="/user/create">Créer un utilisateur</button>
+}
+
+@if (isConnected$ | async) {
+    <button (click)="logout()">Se déconnecter</button>
+}
+
+@if (isAdmin$ | async) {
+    <button routerLink="/user/list">Lister des utilisateurs</button>
+}
